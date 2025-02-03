@@ -1,0 +1,36 @@
+import tkinter as tk
+from tkinter import messagebox
+import random
+
+def check_guess():
+    try:
+        guess = int(entry_var.get())
+        if guess < number_to_guess:
+            messagebox.showinfo("Result", "Too low! Try again.")
+        elif guess > number_to_guess:
+            messagebox.showinfo("Result", "Too high! Try again.")
+        else:
+            messagebox.showinfo("Result", "Congratulations! You guessed the number!")
+            reset_game()
+    except ValueError:
+        messagebox.showerror("Error", "Please enter a valid number.")
+
+def reset_game():
+    global number_to_guess
+    number_to_guess = random.randint(1, 100)
+    entry_var.set("")
+
+# Initialize main window
+root = tk.Tk()
+root.title("Guess the Number Game")
+root.geometry("300x200")
+
+number_to_guess = random.randint(1, 100)
+entry_var = tk.StringVar()
+
+tk.Label(root, text="Guess a number between 1 and 100:", font=("Arial", 12)).pack(pady=10)
+tk.Entry(root, textvariable=entry_var, font=("Arial", 14)).pack(pady=5)
+tk.Button(root, text="Check", font=("Arial", 14), command=check_guess).pack(pady=10)
+tk.Button(root, text="Restart", font=("Arial", 14), command=reset_game).pack(pady=5)
+
+root.mainloop()
